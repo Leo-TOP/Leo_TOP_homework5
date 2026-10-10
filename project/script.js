@@ -1,5 +1,8 @@
-// В стартовом проекте нет готовой логики домашней работы.
-// Спроектируйте модель данных и переходы между состояниями самостоятельно.
+const createButton = document.querySelector('[data-action="create"]');
+const emptyPanel = document.querySelector('[data-state-panel="empty"]');
+const editorPanel = document.querySelector('[data-state-panel="editor"]');
 
-console.log("Стартовый проект подключен")
-
+createButton.addEventListener("click", () => {
+    emptyPanel.hidden = true;
+    editorPanel.hidden = false;
+});

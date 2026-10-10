@@ -71,19 +71,86 @@
               <p class="card-form__note">Добавьте еще минимум три осмысленных поля</p>
             </header>
 
-            <!-- Это один пример связки label, id и name. Остальные поля создайте сами. -->
+
             <div class="field">
-              <label class="field__label" for="card-title">Название</label>
+              <label class="field__label" for="card-musician">Имя исполнителя или группы</label>
               <input
                 class="field__control"
-                id="card-title"
-                name="title"
+                id="card-musician"
+                name="musician"
                 type="text"
-                minlength="3"
-                placeholder="Например, Городской маршрут"
                 required
               />
-              <span class="field__hint">Минимум 3 символа</span>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-album">Название музыкального альбома</label>
+              <input
+                class="field__control"
+                id="card-album"
+                name="album"
+                type="text"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-year">Год релиза</label>
+              <input
+                class="field__control"
+                id="card-year"
+                name="year"
+                type="number"
+                min="1900"
+                max="2026"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-desc">Краткое описание</label>
+              <input
+                class="field__control"
+                id="card-desc"
+                name="desc"
+                type="text"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-status">Статус</label>
+              <select
+                class="field__control"
+                id="card-status"
+                name="status"
+                required>
+                <option value="">Выберите статус:</option>
+                <option value="listened">Слушал(-a)</option>
+                <option value="listening">Слушаю</option>
+                <option value="not-listen">Не слушал(-a)</option>
+                </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-favorite">Любимая песня в альбоме</label>
+              <input
+                class="field__control"
+                id="card-favorite"
+                name="favorite"
+                type="text"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-rating">Оценка (по 10-ти бальной шкале)</label>
+              <input
+                class="field__control"
+                id="card-rating"
+                name="rating"
+                type="number"
+                min="1"
+                max="10"
+                required
+              />
             </div>
 
             <!-- Добавьте поля, которые описывают именно вашу тему. -->
