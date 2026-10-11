@@ -34,6 +34,10 @@ function getDataObjectFormData() {
 function submitForm(event) {
     event.preventDefault();
 
+    if (!validateRating(true)) {
+        return;
+    }
+
     const dataObject = getDataObjectFormData();         
     const objectInString = JSON.stringify(dataObject);
     localStorage.setItem(STORAGE_KEY, objectInString);
@@ -54,10 +58,17 @@ function getSaved() {
 
 const form = document.querySelector(".card-form");
 form.addEventListener("submit", (event) => submitForm(event));
+
 form.addEventListener("input", () => {
     const draft = getDataObjectFormData();
     sessionStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
+    validateRating();
 });
+
+form.addEventListener("change", () => {
+    validateRating();
+});
+
 
 function cancelForm() {
     form.reset();
@@ -69,6 +80,7 @@ function cancelForm() {
     } else {
         switchBetweenPanels(editorPanel, emptyPanel);
     }
+    clearRatingError();
 }
 
 const cancelButton = document.querySelector('[data-action="cancel"]');
@@ -81,11 +93,50 @@ function deleteSavedForm() {
     localStorage.removeItem(STORAGE_KEY);
     sessionStorage.removeItem(DRAFT_KEY);
     form.reset();
-    switchBetweenPanels(viewerPanel, emptyPanel);
+    clearRatingError();
+    switchBetweenPanels(viegitwerPanel, emptyPanel);
 }
 
 deleteSavedFormButton.addEventListener("click", () => deleteSavedForm());
 editButton.addEventListener("click", () => switchBetweenPanels(viewerPanel, editorPanel));
+
+
+
+const RATING_ERROR_ID = "rating-error";
+
+function clearRatingError() {
+    document.getElementById(RATING_ERROR_ID).textContent = "";
+}
+
+function validateRating(isSubmit = false) {
+    const status = form.elements.status.value;
+    const ratingField = form.elements.rating;
+    const rating = ratingField.value.trim();
+    const errorSpan = document.getElementById(RATING_ERROR_ID);
+
+    let message = "";
+
+    const isShowing = errorSpan.textContent !== "";
+
+    if (!isSubmit && !isShowing) {
+        return true;
+    }
+
+    if (status === "Слушал(-a)") {
+        if (rating === "") {
+            message = "Укажите оценку от 1 до 10 для прослушанного альбома.";
+        } else if (Number(rating) < 1 || Number(rating) > 10) {
+            message = "Оценка должна быть числом от 1 до 10.";
+        }
+    }
+
+    if (status === "Не слушал(-a)" && rating !== "") {
+        message = "Уберите оценку: альбом ещё не прослушан.";
+    }
+
+    errorSpan.textContent = message;
+    return message === "";
+}
 
 const saved = localStorage.getItem(STORAGE_KEY);
 const draft = sessionStorage.getItem(DRAFT_KEY);
