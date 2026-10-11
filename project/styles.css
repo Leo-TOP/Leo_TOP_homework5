@@ -344,6 +344,10 @@ textarea.field__control {
   line-height: 1.55;
 }
 
+.saved-card__title {
+  overflow-wrap: anywhere;
+}
+
 .page-footer {
   display: flex;
   justify-content: space-between;
@@ -405,4 +409,3 @@ textarea.field__control {
     gap: 8px;
   }
 }
-

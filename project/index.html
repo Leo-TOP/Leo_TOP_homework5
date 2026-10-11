@@ -43,7 +43,6 @@
           <p class="workspace__status" aria-live="polite">Данные еще не проверены</p>
         </header>
 
-        <!-- Состояние 1: показывается, когда сохраненных данных нет. -->
         <section class="app-state app-state--empty" data-state-panel="empty">
           <p class="app-state__index">01</p>
           <div class="app-state__content">
@@ -58,7 +57,6 @@
           </div>
         </section>
 
-        <!-- Состояние 2: студент дополняет форму под выбранную тему. -->
         <section class="app-state app-state--editor" data-state-panel="editor" hidden>
           <p class="app-state__index">02</p>
 
@@ -68,9 +66,8 @@
                 <p class="card-form__kicker">Редактирование</p>
                 <h3 class="card-form__title">Данные карточки</h3>
               </div>
-              <p class="card-form__note">Добавьте еще минимум три осмысленных поля</p>
+              <p class="card-form__note">Исполнитель, альбом, статус и оценка обязательны</p>
             </header>
-
 
             <div class="field">
               <label class="field__label" for="card-musician">Имя исполнителя или группы</label>
@@ -108,12 +105,12 @@
 
             <div class="field">
               <label class="field__label" for="card-desc">Краткое описание</label>
-              <input
+              <textarea
                 class="field__control"
                 id="card-desc"
                 name="desc"
-                type="text"
-              />
+                rows="3"
+              ></textarea>
             </div>
 
             <div class="field">
@@ -127,7 +124,7 @@
                 <option value="Слушал(-a)">Слушал(-a)</option>
                 <option value="Слушаю">Слушаю</option>
                 <option value="Не слушал(-a)">Не слушал(-a)</option>
-                </select>
+              </select>
             </div>
 
             <div class="field">
@@ -153,8 +150,6 @@
               />
             </div>
 
-            <!-- Добавьте поля, которые описывают именно вашу тему. -->
-
             <div class="card-form__actions">
               <button class="button button--primary" type="submit">
                 Сохранить карточку
@@ -166,7 +161,6 @@
           </form>
         </section>
 
-        <!-- Состояние 3: сюда нужно вывести все сохраненные значения. -->
         <section class="app-state app-state--viewer" data-state-panel="viewer" hidden>
           <p class="app-state__index">03</p>
 
