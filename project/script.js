@@ -15,6 +15,9 @@ createButton.addEventListener("click", () => switchBetweenPanels(emptyPanel, edi
 const STORAGE_KEY = "albumCard";
 const viewerFields = document.querySelectorAll("[data-field]");
 
+const form = document.querySelector(".card-form");
+form.addEventListener("submit", (event) => submitForm(event));
+
 function fillCard(cardData) {
     viewerFields.forEach((field) => {
         field.textContent = cardData[field.dataset.field] || "—";
@@ -39,12 +42,32 @@ function submitForm(event) {
     switchBetweenPanels(editorPanel, viewerPanel);
 }
 
-const form = document.querySelector(".card-form");
-form.addEventListener("submit", (event) => submitForm(event));
+
+function getSaved() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved) {
+        return JSON.parse(saved);
+    }
+    return null;
+}
+
+const cardData = getSaved();
+if (cardData) {
+    fillCard(cardData);
+    switchBetweenPanels(emptyPanel, viewerPanel);
+    fillForm(cardData);
+}
+
 
 function cancelForm() {
     form.reset();
-    switchBetweenPanels(editorPanel, emptyPanel);
+    const cardData = getSaved();
+    if (cardData) {
+        switchBetweenPanels(editorPanel, viewerPanel);
+        fillForm(cardData);
+    } else {
+        switchBetweenPanels(editorPanel, emptyPanel);
+    }
 }
 
 const cancelButton = document.querySelector('[data-action="cancel"]');
@@ -63,13 +86,3 @@ function deleteSavedForm() {
 
 deleteSavedFormButton.addEventListener("click", () => deleteSavedForm());
 editButton.addEventListener("click", () => switchBetweenPanels(viewerPanel, editorPanel));
-
-
-const saved = localStorage.getItem(STORAGE_KEY);
-
-if (saved) {
-    const cardData = JSON.parse(saved);
-    fillCard(cardData);
-    switchBetweenPanels(emptyPanel, viewerPanel);
-    fillForm(cardData);
-}
