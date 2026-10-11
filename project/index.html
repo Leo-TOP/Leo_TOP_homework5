@@ -43,7 +43,6 @@
           <p class="workspace__status" aria-live="polite">Данные еще не проверены</p>
         </header>
 
-        <!-- Состояние 1: показывается, когда сохраненных данных нет. -->
         <section class="app-state app-state--empty" data-state-panel="empty">
           <p class="app-state__index">01</p>
           <div class="app-state__content">
@@ -58,7 +57,6 @@
           </div>
         </section>
 
-        <!-- Состояние 2: студент дополняет форму под выбранную тему. -->
         <section class="app-state app-state--editor" data-state-panel="editor" hidden>
           <p class="app-state__index">02</p>
 
@@ -68,25 +66,89 @@
                 <p class="card-form__kicker">Редактирование</p>
                 <h3 class="card-form__title">Данные карточки</h3>
               </div>
-              <p class="card-form__note">Добавьте еще минимум три осмысленных поля</p>
+              <p class="card-form__note">Исполнитель, альбом, статус и оценка обязательны</p>
             </header>
 
-            <!-- Это один пример связки label, id и name. Остальные поля создайте сами. -->
             <div class="field">
-              <label class="field__label" for="card-title">Название</label>
+              <label class="field__label" for="card-musician">Имя исполнителя или группы</label>
               <input
                 class="field__control"
-                id="card-title"
-                name="title"
+                id="card-musician"
+                name="musician"
                 type="text"
-                minlength="3"
-                placeholder="Например, Городской маршрут"
                 required
               />
-              <span class="field__hint">Минимум 3 символа</span>
             </div>
 
-            <!-- Добавьте поля, которые описывают именно вашу тему. -->
+            <div class="field">
+              <label class="field__label" for="card-album">Название музыкального альбома</label>
+              <input
+                class="field__control"
+                id="card-album"
+                name="album"
+                type="text"
+                required
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-year">Год релиза</label>
+              <input
+                class="field__control"
+                id="card-year"
+                name="year"
+                type="number"
+                min="1900"
+                max="2026"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-desc">Краткое описание</label>
+              <textarea
+                class="field__control"
+                id="card-desc"
+                name="desc"
+                rows="3"
+              ></textarea>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-status">Статус</label>
+              <select
+                class="field__control"
+                id="card-status"
+                name="status"
+                required>
+                <option value="">Выберите статус:</option>
+                <option value="Слушал(-a)">Слушал(-a)</option>
+                <option value="Слушаю">Слушаю</option>
+                <option value="Не слушал(-a)">Не слушал(-a)</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-favorite">Любимая песня в альбоме</label>
+              <input
+                class="field__control"
+                id="card-favorite"
+                name="favorite"
+                type="text"
+              />
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="card-rating">Оценка (по 10-ти бальной шкале)</label>
+              <input
+                class="field__control"
+                id="card-rating"
+                name="rating"
+                type="number"
+                min="1"
+                max="10"
+              />
+              <span class="field__error" id="rating-error"></span>
+            </div>
 
             <div class="card-form__actions">
               <button class="button button--primary" type="submit">
@@ -99,21 +161,72 @@
           </form>
         </section>
 
-        <!-- Состояние 3: сюда нужно вывести все сохраненные значения. -->
         <section class="app-state app-state--viewer" data-state-panel="viewer" hidden>
           <p class="app-state__index">03</p>
 
           <article class="saved-card">
-            <p class="saved-card__label">Сохраненная карточка</p>
-            <h3 class="saved-card__title">Название появится здесь</h3>
+            <p class="saved-card__label">Музыкальный альбом</p>
+            <h3 class="saved-card__title" data-field="album">Название появится здесь</h3>
 
             <dl class="saved-card__details">
               <div class="saved-card__row">
-                <dt>Свойство</dt>
-                <dd>Значение</dd>
+                <dt>Исполнитель</dt>
+                <dd data-field="musician">-</dd>
               </div>
-              <!-- Добавьте строки или другую разметку для всех полей формы. -->
+
+              <div class="saved-card__row">
+                <dt>Год релиза</dt>
+                <dd data-field="year">-</dd>
+              </div>
+
+              <div class="saved-card__row">
+                <dt>Краткое описание</dt>
+                <dd data-field="desc">-</dd>
+              </div>
+
+              <div class="saved-card__row">
+                <dt>Статус</dt>
+                <dd data-field="status">-</dd>
+              </div>
+
+              <div class="saved-card__row">
+                <dt>Любимая песня</dt>
+                <dd data-field="favorite">-</dd>
+              </div>
+
+              <div class="saved-card__row">
+                <dt>Оценка</dt>
+                <dd data-field="rating">-</dd>
+              </div>
             </dl>
+
+            <div class="saved-card__status">
+              <p class="saved-card__status-label">Быстро сменить статус</p>
+              <div class="saved-card__status-actions">
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Слушал(-a)"
+                >
+                  Слушал(-a)
+                </button>
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Слушаю"
+                >
+                  Слушаю
+                </button>
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Не слушал(-a)"
+                >
+                  Не слушал(-a)
+                </button>
+              </div>
+              <span class="saved-card__error" id="status-error"></span>
+            </div>
 
             <div class="saved-card__actions">
               <button class="button button--primary" type="button" data-action="edit">

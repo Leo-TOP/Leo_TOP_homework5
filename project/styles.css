@@ -260,6 +260,13 @@ textarea.field__control {
   line-height: 1.45;
 }
 
+.field__error {
+  color: var(--danger);
+  font-size: 0.78rem;
+  line-height: 1.45;
+  min-height: 1.45em;
+}
+
 .card-form__actions,
 .saved-card__actions {
   display: flex;
@@ -322,6 +329,39 @@ textarea.field__control {
   border: 1px solid var(--line);
 }
 
+.saved-card__status {
+  margin-top: 28px;
+}
+
+.saved-card__status-label {
+  margin: 0 0 12px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.saved-card__status-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.saved-card__status-button {
+  min-height: 40px;
+  padding: 0 14px;
+  font-size: 0.9rem;
+}
+
+.saved-card__error {
+  display: block;
+  margin-top: 10px;
+  color: var(--danger);
+  font-size: 0.78rem;
+  line-height: 1.45;
+}
+
 .saved-card__row {
   display: grid;
   grid-template-columns: minmax(130px, 0.35fr) minmax(0, 1fr);
@@ -342,6 +382,10 @@ textarea.field__control {
   margin: 0;
   overflow-wrap: anywhere;
   line-height: 1.55;
+}
+
+.saved-card__title {
+  overflow-wrap: anywhere;
 }
 
 .page-footer {
@@ -405,4 +449,3 @@ textarea.field__control {
     gap: 8px;
   }
 }
-
