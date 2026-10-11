@@ -94,11 +94,15 @@ function deleteSavedForm() {
     sessionStorage.removeItem(DRAFT_KEY);
     form.reset();
     clearRatingError();
-    switchBetweenPanels(viegitwerPanel, emptyPanel);
+    clearStatusError();
+    switchBetweenPanels(viewerPanel, emptyPanel);
 }
 
 deleteSavedFormButton.addEventListener("click", () => deleteSavedForm());
-editButton.addEventListener("click", () => switchBetweenPanels(viewerPanel, editorPanel));
+editButton.addEventListener("click", () => {
+    clearStatusError();
+    switchBetweenPanels(viewerPanel, editorPanel)
+    });
 
 
 
@@ -108,19 +112,12 @@ function clearRatingError() {
     document.getElementById(RATING_ERROR_ID).textContent = "";
 }
 
-function validateRating(isSubmit = false) {
-    const status = form.elements.status.value;
-    const ratingField = form.elements.rating;
-    const rating = ratingField.value.trim();
-    const errorSpan = document.getElementById(RATING_ERROR_ID);
+function clearStatusError() {
+    document.getElementById("status-error").textContent = "";
+}
 
+function getRatingMessage(status, rating) {
     let message = "";
-
-    const isShowing = errorSpan.textContent !== "";
-
-    if (!isSubmit && !isShowing) {
-        return true;
-    }
 
     if (status === "Слушал(-a)") {
         if (rating === "") {
@@ -134,9 +131,58 @@ function validateRating(isSubmit = false) {
         message = "Уберите оценку: альбом ещё не прослушан.";
     }
 
+    return message;
+}
+
+function validateRating(isSubmit = false) {
+    const status = form.elements.status.value;
+    const rating = form.elements.rating.value.trim();
+    const errorSpan = document.getElementById(RATING_ERROR_ID);
+
+    const isShowing = errorSpan.textContent !== "";
+
+    if (!isSubmit && !isShowing) {
+        return true;
+    }
+
+    const message = getRatingMessage(status, rating);
+
     errorSpan.textContent = message;
     return message === "";
 }
+
+
+
+const statusErrorSpan = document.getElementById("status-error");
+const statusButtons = document.querySelectorAll("[data-set-status]");
+
+statusButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+        const currentCard = getSaved();
+        if (!currentCard) {
+            return;
+        }
+
+        const newStatus = button.dataset.setStatus;
+        const rating = currentCard.rating || "";
+        const message = getRatingMessage(newStatus, rating);
+
+        statusErrorSpan.textContent = message;
+
+        if (message !== "") {
+            return;
+        }
+
+        const updatedCard = { ...currentCard, status: newStatus};
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedCard));
+
+        fillCard(updatedCard);
+        fillForm(updatedCard);
+    });
+});
+
+
 
 const saved = localStorage.getItem(STORAGE_KEY);
 const draft = sessionStorage.getItem(DRAFT_KEY);

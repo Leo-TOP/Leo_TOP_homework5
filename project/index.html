@@ -200,6 +200,34 @@
               </div>
             </dl>
 
+            <div class="saved-card__status">
+              <p class="saved-card__status-label">Быстро сменить статус</p>
+              <div class="saved-card__status-actions">
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Слушал(-a)"
+                >
+                  Слушал(-a)
+                </button>
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Слушаю"
+                >
+                  Слушаю
+                </button>
+                <button
+                  class="button button--secondary saved-card__status-button"
+                  type="button"
+                  data-set-status="Не слушал(-a)"
+                >
+                  Не слушал(-a)
+                </button>
+              </div>
+              <span class="saved-card__error" id="status-error"></span>
+            </div>
+
             <div class="saved-card__actions">
               <button class="button button--primary" type="button" data-action="edit">
                 Редактировать
